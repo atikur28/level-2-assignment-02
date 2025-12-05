@@ -28,8 +28,7 @@ const putUser = async (
         name=$1, 
         email=$2,
         phone=$3, 
-        role=$4, 
-        updated_at=NOW()
+        role=$4
       WHERE id=$5 RETURNING *`;
     params = [name, email, phone, role, userId];
   } else {
@@ -37,8 +36,7 @@ const putUser = async (
       UPDATE users SET 
         name=$1, 
         email=$2,
-        phone=$3,
-        updated_at=NOW()
+        phone=$3
       WHERE id=$4 RETURNING *`;
     params = [name, email, phone, userId];
   }

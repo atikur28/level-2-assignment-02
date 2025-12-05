@@ -13,9 +13,7 @@ const initDB = async () => {
     email VARCHAR(150) UNIQUE NOT NULL,
     password TEXT NOT NULL,
     phone VARCHAR(20) NOT NULL,
-    role VARCHAR(80) NOT NULL CHECK (role IN ('admin', 'customer')),
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
+    role VARCHAR(80) NOT NULL CHECK (role IN ('admin', 'customer'))
   );
   `);
 
@@ -26,9 +24,7 @@ const initDB = async () => {
     type VARCHAR(20) NOT NULL CHECK (type IN ('car', 'bike', 'van', 'SUV')),
     registration_number VARCHAR(150) UNIQUE NOT NULL,
     daily_rent_price INT NOT NULL CHECK (daily_rent_price > 0),
-    availability_status VARCHAR(50) NOT NULL CHECK (availability_status IN ('available', 'booked')),
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
+    availability_status VARCHAR(50) NOT NULL CHECK (availability_status IN ('available', 'booked'))
   );
   `);
 
@@ -41,8 +37,6 @@ const initDB = async () => {
     rent_end_date DATE NOT NULL,
     total_price INT NOT NULL CHECK (total_price > 0),
     status VARCHAR(50) NOT NULL CHECK (status IN ('active', 'cancelled', 'returned')),
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW(),
     CHECK (rent_end_date > rent_start_date)
   );
   `);
