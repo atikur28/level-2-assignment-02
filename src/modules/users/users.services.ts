@@ -19,29 +19,28 @@ const putUser = async (
   phone: string,
   userId: string
 ) => {
-  let query;
-  let params;
-
   if (role) {
-    query = `
+    return pool.query(
+      `
       UPDATE users SET 
         name=$1, 
         email=$2,
         phone=$3, 
         role=$4
-      WHERE id=$5 RETURNING *`;
-    params = [name, email, phone, role, userId];
+      WHERE id=$5 RETURNING *`,
+      [name, email, phone, role, userId]
+    );
   } else {
-    query = `
+    return pool.query(
+      `
       UPDATE users SET 
         name=$1, 
         email=$2,
         phone=$3
-      WHERE id=$4 RETURNING *`;
-    params = [name, email, phone, userId];
+      WHERE id=$4 RETURNING *`,
+      [name, email, phone, userId]
+    );
   }
-
-  return pool.query(query, params);
 };
 
 const deleteUser = async (id: string) => {
@@ -52,14 +51,22 @@ const deleteUser = async (id: string) => {
   );
 
   if (activeBookingCheck.rows.length > 0) {
-    console.log("User cannot be deleted because he/she has active bookings!");
+    return {
+      success: false,
+      message: "User cannot be deleted because he/she has active bookings!",
+      data: null,
+    };
   }
 
   const result = await pool.query(`DELETE FROM users WHERE id=$1 RETURNING *`, [
     id,
   ]);
 
-  return result;
+  return {
+    success: true,
+    message: "User deleted successfully!",
+    data: result,
+  };
 };
 
 export const usersServices = {

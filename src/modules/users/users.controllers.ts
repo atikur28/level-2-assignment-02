@@ -106,8 +106,17 @@ const deleteUser = async (req: Request, res: Response) => {
   try {
     const result = await usersServices.deleteUser(req.params.userId as string);
 
-    if (result.rowCount === 0) {
-      res.status(404).json({
+    if (!result.success) {
+      return res.status(400).json({
+        success: false,
+        message: result.message,
+      });
+    }
+
+    const deletedUser = result.data!;
+
+    if (deletedUser.rowCount === 0) {
+      return res.status(404).json({
         success: false,
         message: "User not found!",
       });
@@ -115,11 +124,11 @@ const deleteUser = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       success: true,
-      message: "User deleted successfully!",
-      data: result.rows,
+      message: result.message,
+      data: deletedUser.rows,
     });
   } catch (error: any) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
       details: error,

@@ -7,7 +7,7 @@ Built with **Node.js**, **Express**, **TypeScript**, **PostgreSQL**, and **JWT A
 
 ## 🌐 Live Deployment
 
-🔗 **API Base URL:** https://vehicle-rental-system.vercel.app
+🔗 **API Base URL:** https://vehicle-rental-management-system-tau.vercel.app
 
 ---
 
@@ -98,10 +98,9 @@ http://localhost:5000/api/v1
 ## 📦 GitHub Repository
 
 🔗 https://github.com/atikur28/level-2-assignment-02
-your-repo-name
 
 ---
 
 ## 🌐 Live Deployment
 
-🔗 https://vehicle-rental-system.vercel.app
+🔗 https://vehicle-rental-management-system-tau.vercel.app
