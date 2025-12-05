@@ -99,7 +99,7 @@ const putBooking = async (bookingId: string, role: string) => {
 
     return {
       success: true,
-      message: "Booking cancelled successfully!",
+      message: "Booking cancelled successfully",
       data: updated.rows[0],
     };
   }
@@ -117,7 +117,7 @@ const putBooking = async (bookingId: string, role: string) => {
 
     return {
       success: true,
-      message: "Booking returned!",
+      message: "Booking marked as returned. Vehicle is now available",
       data: updated.rows[0],
     };
   }

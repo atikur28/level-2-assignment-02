@@ -7,7 +7,7 @@ const createVehicle = async (req: Request, res: Response) => {
 
     return res.status(201).json({
       success: true,
-      message: "Vehicle created successfully!",
+      message: "Vehicle created successfully",
       data: result.rows[0],
     });
   } catch (error: any) {
@@ -22,9 +22,17 @@ const getVehicles = async (req: Request, res: Response) => {
   try {
     const result = await vehiclesServices.getVehicles();
 
+    if (result.rows.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No vehicles found",
+        data: [],
+      });
+    }
+
     return res.status(200).json({
       success: true,
-      message: "Vehicles data retrieved successfully!",
+      message: "Vehicles retrieved successfully!",
       data: result.rows,
     });
   } catch (error: any) {
@@ -45,13 +53,13 @@ const getVehicle = async (req: Request, res: Response) => {
     if (result.rows.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "Vehicle not found!",
+        message: "No vehicle found",
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Vehicle found successfully!",
+      message: "Vehicle retrieved successfully",
       data: result.rows[0],
     });
   } catch (error: any) {
@@ -85,13 +93,13 @@ const putVehicle = async (req: Request, res: Response) => {
     if (result.rows.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "Vehicle not found!",
+        message: "No vehicle found",
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Vehicle updated successfully!",
+      message: "Vehicle updated successfully",
       data: result.rows[0],
     });
   } catch (error: any) {
@@ -112,14 +120,13 @@ const deleteVehicle = async (req: Request, res: Response) => {
     if (result.rowCount === 0) {
       res.status(404).json({
         success: false,
-        message: "Vehicle not found!",
+        message: "No vehicle found",
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Vehicle deleted successfully!",
-      data: result.rows,
+      message: "Vehicle deleted successfully",
     });
   } catch (error: any) {
     res.status(500).json({

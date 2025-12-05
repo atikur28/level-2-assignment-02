@@ -7,7 +7,7 @@ const getUsers = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: "Users data retrieved successfully!",
+      message: "Users retrieved successfully",
       data: result.rows,
     });
   } catch (error: any) {
@@ -32,7 +32,7 @@ const getUser = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       success: true,
-      message: "User found successfully!",
+      message: "User retrieved successfully",
       data: result.rows[0],
     });
   } catch (error: any) {
@@ -62,9 +62,9 @@ const putUser = async (req: Request, res: Response) => {
       loggedInUser.role === "customer" &&
       loggedInUser.id.toString() != userId
     ) {
-      return res.status(403).json({
+      return res.status(401).json({
         success: false,
-        message: "Forbidden!",
+        message: "Unauthorized!",
       });
     }
 
@@ -88,9 +88,15 @@ const putUser = async (req: Request, res: Response) => {
       });
     }
 
+    const user = result.rows[0];
+
+    if (user.password) {
+      delete user.password;
+    }
+
     return res.status(200).json({
       success: true,
-      message: "User updated successfully!",
+      message: "User updated successfully",
       data: result.rows[0],
     });
   } catch (error: any) {
@@ -125,7 +131,6 @@ const deleteUser = async (req: Request, res: Response) => {
     return res.status(200).json({
       success: true,
       message: result.message,
-      data: deletedUser.rows,
     });
   } catch (error: any) {
     return res.status(500).json({
